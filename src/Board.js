@@ -161,27 +161,56 @@
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       //one single diagonal line
+      //i : one number range - (n -1) ~ (n -1)
+
+
       var n = this.get('n');
+      var colIndex = majorDiagonalColumnIndexAtFirstRow;
+      //check input is negative or positive or 0
+      //if input positive
+      //loop [i,j]
+      //
       var counter = 0;
-
-      var row = 0;
-      var col = 0;
-
-
-      for ( var i = 0; i < n; i++) {
-        if () // 1
-
+      //assume input is 0
+      //if input 0
+      //check 00, 11, 22 ........ n-1n-1
+      if (colIndex >= 0) {
+        for (var i = 0; i < n; i++) {
+          var row = this.get(i); //[1, 0, 0, 0]
+          if (row[i] === 1) { // 00, 11, 22....12, 23, 34
+            counter++;
+          }
+        }
       }
-      //
-      //
-
-
+      //input is negataive
+      //convert input to positive
+      if (colIndex < 0) {
+        var positiveinput = Math.abs(colIndex);
+        for (var i = positiveinput; i < n; i++) {
+          var row = this.get(i);
+          var j = i - positiveinput;
+          if (row[j] === 1) {
+            counter++;
+          }
+        }
+      }
+      if (counter > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       //entrie board
+      var n = this.get('n');
+
+      for ( var i = 1 - n; i < n; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
