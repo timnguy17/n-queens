@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -79,11 +79,36 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      //loop to find the element has '1'
+      //Input : an array [0,0,0,1,0]
+      //O : boolean
+      var counter = 0;
+
+      // console.log(rowIndex);
+      // console.log(this.get(n));
+      var row = this.get(rowIndex);
+
+      for (var i = 0; i < row.length; i++) {
+        if (row[i] === 1) {
+          counter++;
+        }
+      }
+      if (counter > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      //entire board
+      //get n value
+      var n = this.get('n');
+      for ( var i = 0; i < n; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -94,12 +119,38 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+
+      var counter = 0;
+      // console.log(rowIndex);
+      // console.log(this.get(n));
+      var n = this.get('n');
+
+      for (var i = 0; i < n; i++) {
+        var row = this.get(i);
+        if (row[colIndex] === 1) {
+          counter++;
+        }
+      }
+      if (counter > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+
+      // column
+      // board[n][0]
+      var n = this.get('n');
+
+      for (var i = 0; i < n; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
+
     },
 
 
@@ -109,11 +160,28 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      //one single diagonal line
+      var n = this.get('n');
+      var counter = 0;
+
+      var row = 0;
+      var col = 0;
+
+
+      for ( var i = 0; i < n; i++) {
+        if () // 1
+
+      }
+      //
+      //
+
+
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      //entrie board
       return false; // fixme
     },
 
