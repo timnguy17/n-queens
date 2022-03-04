@@ -18,8 +18,8 @@
       }
     },
 
-    rows: function() {
-      return _(_.range(this.get('n'))).map(function(rowIndex) {
+    rows: function() { // all rows on boards
+      return _(_.range(this.get('n'))).map(function(rowIndex) { // range 0-n
         return this.get(rowIndex);
       }, this);
     },
@@ -162,14 +162,11 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       //one single diagonal line
       //i : one number range - (n -1) ~ (n -1)
-
-
       var n = this.get('n');
       var colIndex = majorDiagonalColumnIndexAtFirstRow;
       //check input is negative or positive or 0
       //if input positive
       //loop [i,j]
-      //
       var counter = 0;
       //assume input is 0
       //if input 0
@@ -210,7 +207,6 @@
           return true;
         }
       }
-
       return false; // fixme
     },
 
@@ -221,11 +217,59 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var n = this.get('n');
+      var colIndex = minorDiagonalColumnIndexAtFirstRow;
+      var counter = 0;
+      // i goes up  // j goes dow
+      // if input is 0, positive
+      // loop
+      //input: n =4, column index =  0, i
+      if (colIndex >= 0) {
+        for (var i = 0; i < n; i++, colIndex--) {
+          var row = this.get(i); //[1, 0, 0, 0]
+          // if (row[n - i - 1] === 1) { // 03, 12, 21, 30.... n = 4 i = 0 -> row[3] n = 4 i = 1 -> row [2]
+          // console.log('colIndex  ', colIndex);
+          // conosle.log('rowIndex  ', i);
+          if (row[colIndex] === 1) {
+            counter++;
+          }
+        }
+      }
+      if (counter > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
+    //if negative - 02, 11, 20
+    //input n = 4
+    //col index  = -1
+    //1,3/ 2,2/ 3,1
+    //0,2/ 1, 1 / 2,0
+    // if (colIndex < 0) { //if minorDiagonalColumnIndexAtFirstRow = -3
+    //   // var positiveinput = Math.abs(colIndex); //positiveinput = 1
+    //   var positiveinput = Math.abs(colIndex); //positiveinput = 3
+
+    //   var j = n - positiveinput - 1; // 2 //1 //0
+    //   for (var i = 0; i < n; i++) {
+    //     var row = this.get(i); //[1, 0, 0, 0]
+    //     if (row[j] === 1) { // 02 11 20 //01 10 //00
+    //       counter++;
+    //     }
+    //     j --;
+    //   }
+
+    // }
+
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var n = this.get('n');
+
+      for ( var i = (n * 2); i >= 0; i--) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
